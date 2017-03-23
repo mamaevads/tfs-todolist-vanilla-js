@@ -12,14 +12,14 @@
         <input class="add-task__input" placeholder="Имя задачи" autofocus>
     </div>
     <div class="filters">
-        <div data-filter="all" class="filters__item filters__item_selected">все</div>
-        <div data-filter="done" class="filters__item">завершенные</div>
-        <div data-filter="todo" class="filters__item">незавершенные</div>
+        <div data-filter="all" id="all" class="filters__item filters__item_selected">все</div>
+        <div data-filter="done" id="done" class="filters__item">завершенные</div>
+        <div data-filter="todo" id="todo" class="filters__item">незавершенные</div>
     </div>
     <ul class="list"></ul>
     <div class="statistic">
         Всего:
-        <div class="statistic__total">3</div>
+        <div class="statistic__total"></div>
         Завершено:
         <div class="statistic__done">1</div>
         Осталось:
@@ -33,6 +33,6 @@
         <div class="task__delete-button">❌</div>
     </li>
 </template>
-<script src="app.js"></script>
+<script src="app.js" onload="updateTasks()"></script>
 </body>
 </html>
