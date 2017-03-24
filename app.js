@@ -3,51 +3,58 @@
 var listElement = document.querySelector('.list');
 var itemElementList = listElement.children;
 
-document.getElementById('all').addEventListener('click', showAll);
-function showAll(){
-	[].forEach.call(itemElementList, function(elem) {
-			elem.style.display = 'block';
-	});
-	document.getElementById('all').style.borderColor = 'inherit';
-	document.getElementById('todo').style.borderColor = 'transparent';
-	document.getElementById('done').style.borderColor = 'transparent';
-}
-
-document.getElementById('todo').addEventListener('click', showTodo);
-function showTodo(){
-    [].forEach.call(itemElementList, function(elem) {
-		if (elem.classList.contains('task_todo')) elem.style.display = 'block';
-		else elem.style.display = 'none';
-	});
-	document.getElementById('all').style.borderColor = 'transparent';
-	document.getElementById('todo').style.borderColor = 'inherit';
-	document.getElementById('done').style.borderColor = 'transparent';
-}
-
-document.getElementById('done').addEventListener('click', showDone);
-function showDone(){
-    [].forEach.call(itemElementList, function(elem) {
-		if (elem.classList.contains('task_done')) elem.style.display = 'block';
-		else elem.style.display = 'none';
-	});
-	document.getElementById('all').style.borderColor = 'transparent';
-	document.getElementById('todo').style.borderColor = 'transparent';
-	document.getElementById('done').style.borderColor = 'inherit';
-}
 var templateElement = document.getElementById('todoTemplate');
 var templateContainer = 'content' in templateElement ? templateElement.content : templateElement;
+
+var filtersList = document.getElementById('filters');
+filtersList.addEventListener('click', showThis);
+var filters = filtersList.children;
+var showNow = 'all';
+function showThis(event){
+	var applyFilter;
+	if (typeof event != 'string'){
+		if(event.target == filtersList) return;
+		applyFilter = event.target.dataset.filter;
+		showNow = applyFilter;
+	}
+	else applyFilter = event;
+	[].forEach.call(filters, function(elem) {
+			if (elem.dataset.filter==applyFilter) elem.className = 'filters__item filters__item_selected';
+			else elem.className = 'filters__item';
+	});
+	if (applyFilter == 'all'){
+		[].forEach.call(itemElementList, function(elem) {
+			elem.style.display = 'block';
+		});
+	}
+	else {
+		var task = 'task_' + applyFilter;
+		[].forEach.call(itemElementList, function(elem) {
+			if (elem.classList.contains(task)) elem.style.display = 'block';
+			else elem.style.display = 'none';
+		});
+	}
+}
+
+// статистика
+var statsElement = document.querySelector('.statistic');
+var statsTotalElement = statsElement.querySelector('.statistic__total');
+var statsLeftElement = statsElement.querySelector('.statistic__left');
+var statsDoneElement = statsElement.querySelector('.statistic__done');
+
 let tasks = 0, done = 0, todo = 0;
 
 function updateTasks() {
+	showThis(showNow);
 	tasks = itemElementList.length;
 	done = 0;
 	[].forEach.call(itemElementList, function(elem) {
 		if (elem.classList.contains('task_done')) done++;
 	});
 	todo = tasks - done;
-	document.querySelector('.statistic__total').innerHTML = tasks;
-	document.querySelector('.statistic__done').innerHTML = done;
-	document.querySelector('.statistic__left').innerHTML = todo;
+	statsTotalElement.textContent = tasks;
+	statsDoneElement.textContent = done;
+	statsLeftElement.textContent = todo;
 }
 
 
@@ -77,7 +84,7 @@ function addTodoFromTemplate(todo) {
 	newElement.querySelector('.task__name').textContent = todo.name;
 	setTodoStatusClassName(newElement, todo.status === 'todo');
 	updateTasks();
-	showAll();
+	//showAll();
 	return newElement;
 }
 
@@ -100,7 +107,6 @@ function onListClick(event) {
 		deleteTodo(element);
 	}
 	updateTasks();
-	showAll();
 }
 
 function isStatusBtn(target) {
