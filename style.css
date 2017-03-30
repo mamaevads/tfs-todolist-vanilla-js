@@ -154,6 +154,10 @@ body {
     outline: none;
 }
 
+.date__time {
+    font-style: italic;
+}
+
 .task_done .task__status {
     color: lightgreen;
 }
