@@ -41,7 +41,16 @@ body {
 .add-task__input:focus {
     outline: none;
 }
-
+.task__name {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 14px;
+    margin: auto;
+    font-size: 15px;
+    font-weight: bold;
+}
 /*=====  End of ADD TASK  ======*/
 
 

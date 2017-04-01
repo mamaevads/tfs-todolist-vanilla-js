@@ -29,11 +29,13 @@
 <template id="todoTemplate" style="display: none">
     <div class="list__item task">
         <div class="task__status task__status_todo"></div>
-        <div class="date__time" layout ="column" font-style="italic">
-            <div class="task__time"></div>
-            <div class="task__date"></div>
+        <div class="info" style="display: inline-flex;">
+            <div class="date__time" font-style="italic">
+                <div class="task__time"></div>
+                <div class="task__date"></div>
+            </div>
+            <span class="task__name" style="position: relative;">{{TODO}}</span>
         </div>
-        <span class="task__name">{{TODO}}</span>
         <div class="task__delete-button">❌</div>
     </div>
 </template>
