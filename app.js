@@ -69,7 +69,7 @@ function formatTime(date) {
 }
 
 function formatDate(date) {
-    var day = date.getDay() >= 10 ? date.getDay() : '0' + date.getDay();
+    var day = date.getUTCDate() >= 10 ? date.getUTCDate() : '0' + date.getUTCDate();
     var month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
     var year = date.getFullYear() >= 10 ? date.getFullYear() : '0' + date.getFullYear();
 
